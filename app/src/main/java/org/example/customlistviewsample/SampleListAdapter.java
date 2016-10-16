@@ -30,6 +30,7 @@ public class SampleListAdapter extends ArrayAdapter<SampleListItem> {
 
         mResource = resource;
         mItems = items;
+        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
