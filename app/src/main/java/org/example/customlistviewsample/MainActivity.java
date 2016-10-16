@@ -2,14 +2,21 @@ package org.example.customlistviewsample;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * アクティビティ生成時に呼ばれる
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,5 +36,23 @@ public class MainActivity extends AppCompatActivity {
         // 出力結果をリストビューに表示
         SampleListAdapter adapter = new SampleListAdapter(this, R.layout.samplelist_item, listItems);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClickListener);
     }
+
+    /**
+     * リストビューのタップイベント
+     */
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // タップしたアイテムの取得
+            ListView listView = (ListView)parent;
+            SampleListItem item = (SampleListItem)listView.getItemAtPosition(position);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Tap No. " + String.valueOf(position));
+            builder.setMessage(item.getTitle());
+            builder.show();
+        }
+    };
 }
